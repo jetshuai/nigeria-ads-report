@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nigeria Mobile Ads — Competitive Content Strategy Report</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2e3350;
+      --text: #e8eaf6;
+      --muted: #8b90b0;
+      --accent: #6c63ff;
+
+      --samsung: #1428a0;
+      --samsung-light: #4a90e2;
+      --xiaomi: #ff6900;
+      --xiaomi-light: #ff9a3c;
+      --tecno: #00c853;
+      --tecno-light: #69f0ae;
+
+      --radius: 14px;
+      --shadow: 0 4px 24px rgba(0,0,0,.45);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #0f1117 0%, #1a1d27 40%, #12152a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 72px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(108,99,255,.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(108,99,255,.15);
+      border: 1px solid rgba(108,99,255,.4);
+      color: #a89eff;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 30%, #a89eff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin: 0 auto 28px;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--tecno); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
+
+    /* ===== NAV ===== */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15,17,23,.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; gap: 4px;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-inner::-webkit-scrollbar { display: none; }
+    .nav-link {
+      white-space: nowrap;
+      padding: 14px 16px;
+      font-size: .875rem;
+      font-weight: 500;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      cursor: pointer;
+    }
+    .nav-link:hover, .nav-link.active { color: var(--text); border-bottom-color: var(--accent); }
+
+    /* ===== LAYOUT ===== */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 64px 0; }
+    section + section { border-top: 1px solid var(--border); }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-header { margin-bottom: 36px; }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      line-height: 1.25;
+    }
+    .section-desc { color: var(--muted); margin-top: 10px; max-width: 640px; }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-size: .8rem;
+    }
+    .card-value {
+      font-size: 2.4rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .card-sub { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+
+    /* ===== GRID ===== */
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+    @media(max-width:768px) {
+      .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ===== KPI CARDS ===== */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 16px; margin-bottom: 40px; }
+    .kpi { padding: 22px 24px; }
+    .kpi .brand-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      display: inline-block; margin-right: 8px; vertical-align: middle;
+    }
+
+    /* ===== BRAND TABS ===== */
+    .brand-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .brand-tab {
+      padding: 8px 20px;
+      border-radius: 999px;
+      font-size: .875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all .2s;
+      background: var(--surface2);
+      color: var(--muted);
+    }
+    .brand-tab:hover { color: var(--text); }
+    .brand-tab.active-samsung { background: rgba(20,40,160,.25); border-color: var(--samsung-light); color: var(--samsung-light); }
+    .brand-tab.active-xiaomi  { background: rgba(255,105,0,.2);  border-color: var(--xiaomi-light);  color: var(--xiaomi-light); }
+    .brand-tab.active-tecno   { background: rgba(0,200,83,.15);  border-color: var(--tecno-light);   color: var(--tecno-light); }
+
+    /* ===== BRAND DETAIL PANEL ===== */
+    .brand-panel { display: none; }
+    .brand-panel.visible { display: block; }
+
+    .brand-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 24px 28px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+    }
+    .brand-logo-circle {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 900; flex-shrink: 0;
+    }
+    .brand-header h2 { font-size: 1.4rem; font-weight: 700; }
+    .brand-header p  { font-size: .9rem; color: var(--muted); margin-top: 2px; }
+
+    .brand-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 28px;
+    }
+
+    .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 20px; }
+    .info-block {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .info-block h4 {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 12px;
+    }
+    .info-block p { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ===== MESSAGE PILLS ===== */
+    .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .pill {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 500;
+      border: 1px solid;
+    }
+    .pill-samsung { background: rgba(20,40,160,.2); border-color: rgba(74,144,226,.4); color: #90b4f5; }
+    .pill-xiaomi  { background: rgba(255,105,0,.15); border-color: rgba(255,154,60,.4); color: #ffb87a; }
+    .pill-tecno   { background: rgba(0,200,83,.12);  border-color: rgba(105,240,174,.4); color: #69f0ae; }
+
+    /* ===== CHARTS ===== */
+    .chart-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .chart-wrap h3 { font-size: 1rem; font-weight: 600; margin-bottom: 20px; }
+    .chart-container { position: relative; }
+
+    /* ===== COMPARISON TABLE ===== */
+    .comp-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    .comp-table th, .comp-table td {
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .comp-table th {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      background: var(--surface2);
+    }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr:hover td { background: rgba(255,255,255,.03); }
+    .comp-table td:first-child { font-weight: 600; color: var(--muted); font-size: .8rem; text-transform: uppercase; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 600;
+    }
+    .badge-high   { background: rgba(0,200,83,.15);  color: var(--tecno-light); }
+    .badge-medium { background: rgba(255,105,0,.15); color: var(--xiaomi-light); }
+    .badge-low    { background: rgba(108,99,255,.15);color: #a89eff; }
+
+    /* ===== STRATEGY CARDS ===== */
+    .strategy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 20px; }
+    .strategy-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      border-top: 3px solid;
+    }
+    .strategy-card.samsung { border-top-color: var(--samsung-light); }
+    .strategy-card.xiaomi  { border-top-color: var(--xiaomi-light); }
+    .strategy-card.tecno   { border-top-color: var(--tecno-light); }
+    .strategy-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
+    .strategy-card p  { font-size: .875rem; color: var(--muted); line-height: 1.65; }
+
+    /* ===== INSIGHT CALLOUTS ===== */
+    .insight {
+      background: rgba(108,99,255,.08);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: .9rem;
+      color: var(--muted);
+    }
+    .insight strong { color: var(--text); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .5s, transform .5s; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">Meta Ads Library · Nigeria · Feb 2026</div>
+  <h1>Nigeria Mobile Ads<br>Competitive Strategy Report</h1>
+  <p>An in-depth analysis of active Meta ad campaigns for Samsung, Xiaomi/Redmi, and Tecno in the Nigerian market.</p>
+  <div class="hero-meta">
+    <span><span class="dot"></span> Live Data — February 27, 2026</span>
+    <span>📍 Nigeria (NG)</span>
+    <span>📊 3 Brands Analyzed</span>
+    <span>🔍 Meta Ads Library</span>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-link active" onclick="scrollTo('overview')">Overview</a>
+    <a class="nav-link" onclick="scrollTo('brands')">Brand Deep-Dive</a>
+    <a class="nav-link" onclick="scrollTo('charts')">Charts</a>
+    <a class="nav-link" onclick="scrollTo('comparison')">Comparison</a>
+    <a class="nav-link" onclick="scrollTo('strategy')">Strategy Insights</a>
+    <a class="nav-link" onclick="scrollTo('conclusion')">Conclusion</a>
+  </div>
+</nav>
+
+<!-- OVERVIEW -->
+<section id="overview">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Overview</div>
+      <h2 class="section-title">Market Snapshot</h2>
+      <p class="section-desc">Key metrics from the Meta Ads Library for active ads targeting Nigeria across all three brands.</p>
+    </div>
+
+    <div class="kpi-grid reveal">
+      <div class="card kpi">
+        <div class="card-title"><span class="brand-dot" style="background:var(--samsung-light)"></span>Samsung</div>
+        <div class="card-value" style="color:var(--samsung-light)">~2,200</div>
+        <div class="card-sub">Active ads in Nigeria</div>
+      </div>
+      <div class="card kpi">
+        <div class="card-title"><span class="brand-dot" style="background:var(--xiaomi-light)"></span>Xiaomi / Redmi</div>
+        <div class="card-value" style="color:var(--xiaomi-light)">~520</div>
+        <div class="card-sub">Active ads in Nigeria</div>
+      </div>
+      <div class="card kpi">
+        <div class="card-title"><span class="brand-dot" style="background:var(--tecno-light)"></span>Tecno</div>
+        <div class="card-value" style="color:var(--tecno-light)">~250</div>
+        <div class="card-sub">Active ads in Nigeria</div>
+      </div>
+      <div class="card kpi">
+        <div class="card-title">Total Active Ads</div>
+        <div class="card-value">~2,970</div>
+        <div class="card-sub">Across all three brands</div>
+      </div>
+      <div class="card kpi">
+        <div class="card-title">Primary Platform</div>
+        <div class="card-value" style="font-size:1.5rem">FB + IG</div>
+        <div class="card-sub">Facebook & Instagram dominant</div>
+      </div>
+      <div class="card kpi">
+        <div class="card-title">Data Source</div>
+        <div class="card-value" style="font-size:1.3rem">Meta Ads</div>
+        <div class="card-sub">Library — Feb 27, 2026</div>
+      </div>
+    </div>
+
+    <div class="insight reveal">
+      <strong>Key Observation:</strong> Samsung commands the largest share of active ad volume (~74%), yet operates entirely through a retailer and distributor ecosystem rather than a direct official brand page. Xiaomi/Redmi is the only brand running a centralized, official-page campaign, while Tecno relies on a hybrid model of retailer ads and occasional brand-level content.
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DEEP-DIVE -->
+<section id="brands">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Brand Deep-Dive</div>
+      <h2 class="section-title">Per-Brand Analysis</h2>
+      <p class="section-desc">Select a brand to explore its messaging, creative approach, and campaign strategy.</p>
+    </div>
+
+    <div class="brand-tabs reveal">
+      <button class="brand-tab active-samsung" onclick="showBrand('samsung')">Samsung</button>
+      <button class="brand-tab" onclick="showBrand('xiaomi')">Xiaomi / Redmi</button>
+      <button class="brand-tab" onclick="showBrand('tecno')">Tecno</button>
+    </div>
+
+    <!-- SAMSUNG PANEL -->
+    <div class="brand-panel visible" id="panel-samsung">
+      <div class="brand-header" style="background:rgba(20,40,160,.15)">
+        <div class="brand-logo-circle" style="background:rgba(20,40,160,.4);color:#4a90e2">S</div>
+        <div>
+          <h2>Samsung</h2>
+          <p>Ecosystem-driven · ~2,200 active ads · Multi-tier distribution</p>
+        </div>
+      </div>
+      <div class="brand-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <h4 style="color:var(--samsung-light)">Key Focus Messages</h4>
+            <p>Samsung's messaging spans its full product portfolio. Premium devices like the Galaxy Z Fold 6 carry luxury-oriented copy: <em>"Luxury. Power. Productivity. All in one foldable masterpiece."</em> Seasonal promotions dominate mid-range campaigns, with Valentine Combo Deals offering savings of up to ₦1,000,000 and White Friday discounts of up to 70%. The Galaxy S25 Ultra is positioned as a device for <em>"Bosses, Creators & Go-Getters."</em></p>
+            <div class="pill-list">
+              <span class="pill pill-samsung">Luxury &amp; Prestige</span>
+              <span class="pill pill-samsung">Seasonal Deals</span>
+              <span class="pill pill-samsung">Warranty Assurance</span>
+              <span class="pill pill-samsung">Pay Monthly</span>
+              <span class="pill pill-samsung">Nationwide Delivery</span>
+            </div>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--samsung-light)">Creative Strategy</h4>
+            <p>Samsung's creative output is driven by its retail partners. Authorized retailers like SLOT and SIMS produce high-quality promotional visuals, often featuring bundle deals and explicit price points. Video ads are common for the S-series, while carousel ads are used for promotional campaigns. Seasonal themes (Valentine's Day, White Friday) provide a consistent creative hook throughout the year.</p>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--samsung-light)">Campaign Strategy</h4>
+            <p>Samsung employs a fully decentralized, multi-tier campaign model. Authorized distributors (SIMS Nigeria) and retailers (SLOT Systems) run the bulk of advertising. This generates a massive ad volume (~2,200 active ads) and enables simultaneous targeting of budget buyers (A-series) and premium customers (S-series, Z-series). Financing options (pay monthly, BNPL) are prominently featured to lower the purchase barrier.</p>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--samsung-light)">Active Products Advertised</h4>
+            <p>Galaxy Z Fold 6 (flagship foldable), Galaxy S25 Ultra (premium flagship), Galaxy A-series (A05, A06, A07, A15, A16, A17 — budget/mid-range), Samsung home appliances (TVs, ACs, Refrigerators via SIMS). The A-series generates the highest ad frequency due to its broad market appeal.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- XIAOMI PANEL -->
+    <div class="brand-panel" id="panel-xiaomi">
+      <div class="brand-header" style="background:rgba(255,105,0,.12)">
+        <div class="brand-logo-circle" style="background:rgba(255,105,0,.3);color:#ff9a3c">X</div>
+        <div>
+          <h2>Xiaomi / Redmi</h2>
+          <p>Official brand page · ~520 active ads · Product launch campaign</p>
+        </div>
+      </div>
+      <div class="brand-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <h4 style="color:var(--xiaomi-light)">Key Focus Messages</h4>
+            <p>Xiaomi's messaging is tightly focused on the Redmi Note 15 Series launch. The central theme is <em>"Titan Durability"</em> — a brand-coined term emphasizing ruggedness. Supporting messages cover specific features: drop resistance, water resistance, gaming performance, wet touch, reverse charging, and ultra-clear camera. The campaign tagline <em>"It's titan tough"</em> is consistently applied across all creatives.</p>
+            <div class="pill-list">
+              <span class="pill pill-xiaomi">Titan Durability</span>
+              <span class="pill pill-xiaomi">Ultra-Clear Camera</span>
+              <span class="pill pill-xiaomi">Gaming Performance</span>
+              <span class="pill pill-xiaomi">Water Resistance</span>
+              <span class="pill pill-xiaomi">Exclusive Offer</span>
+            </div>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--xiaomi-light)">Creative Strategy</h4>
+            <p>Xiaomi uses a feature-carousel approach: each ad unit is a multi-card carousel where every card highlights one specific feature with a short headline and a supporting description. Product shots are clean and professional, set against white or gradient backgrounds. Lifestyle imagery (young Nigerians using the phone outdoors) is interspersed. All ads use a consistent "Shop Now" CTA linking to mi.com, reinforcing direct e-commerce conversion.</p>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--xiaomi-light)">Campaign Strategy</h4>
+            <p>Xiaomi runs a centralized product launch campaign from the official "Xiaomi Nigeria" page. The strategy is to flood the market with feature-specific ad variants, allowing the algorithm to serve the most relevant feature message to each user segment. The campaign launched in January 2026 (Redmi Note 15 Pro Plus 5G) and accelerated in February 2026 with the broader Redmi Note 15 Series push. Authorized retailers (SLOT, FINET, 3C HUB) are mentioned in ad copy but the primary conversion path is direct-to-consumer.</p>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--xiaomi-light)">Active Products Advertised</h4>
+            <p>Redmi Note 15 Series (primary), Redmi Note 15 Pro Plus 5G (flagship of the series), Redmi A5 4G (budget tier, via third-party app install ads). The campaign is laser-focused on the Note 15 Series, with minimal advertising for other Xiaomi product lines in Nigeria.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TECNO PANEL -->
+    <div class="brand-panel" id="panel-tecno">
+      <div class="brand-header" style="background:rgba(0,200,83,.1)">
+        <div class="brand-logo-circle" style="background:rgba(0,200,83,.25);color:#69f0ae">T</div>
+        <div>
+          <h2>Tecno Mobile</h2>
+          <p>Retailer-driven · ~250 active ads · Full-range positioning</p>
+        </div>
+      </div>
+      <div class="brand-body">
+        <div class="info-grid">
+          <div class="info-block">
+            <h4 style="color:var(--tecno-light)">Key Focus Messages</h4>
+            <p>Tecno positions itself as a brand for everyday Nigerian consumers: <em>"Built to keep up with your everyday hustle—not slow you down."</em> Camera quality is a central theme, especially for the Camon series (Sony 50MP LYT-700C sensor). Affordability and flexible payment options (Buy Now, Pay Later via CredPal and Credit Direct) are prominently featured. The Phantom V Fold 2 represents a flagship foldable aspiration.</p>
+            <div class="pill-list">
+              <span class="pill pill-tecno">Everyday Hustle</span>
+              <span class="pill pill-tecno">Camera Quality</span>
+              <span class="pill pill-tecno">Buy Now Pay Later</span>
+              <span class="pill pill-tecno">Smart Performance</span>
+              <span class="pill pill-tecno">Affordable Value</span>
+            </div>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--tecno-light)">Creative Strategy</h4>
+            <p>Tecno's creative assets are a mix of image carousels and short video ads, with a strong emphasis on lifestyle imagery reflecting Nigerian daily life. A notable differentiator is the transparency in pricing — many ads explicitly list prices for multiple models, making it easy for consumers to compare and decide. WhatsApp integration is heavy, with "Send WhatsApp message" as a primary CTA, reflecting the platform's dominance in Nigerian consumer communication.</p>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--tecno-light)">Campaign Strategy</h4>
+            <p>Tecno's advertising is almost entirely retailer-driven, with authorized partners like Aura Shop Africa running the majority of campaigns. This decentralized approach allows for localized messaging and pricing, but results in a lower overall ad volume compared to Samsung's ecosystem. The brand covers a wide price range, from the budget Pop 8 to the premium Phantom V Fold 2, allowing it to compete at every market tier. BNPL financing is a key strategic differentiator.</p>
+          </div>
+          <div class="info-block">
+            <h4 style="color:var(--tecno-light)">Active Products Advertised</h4>
+            <p>Tecno Camon 40, Camon 40 Pro (mid-range camera phones), Tecno Camon 50 Pro (flagship camera, Sony sensor), Tecno Pop 9, Pop 8 (budget), Tecno Spark 30C (entry-level), Phantom V Fold 2 (premium foldable). Pricing ranges from approximately ₦101,800 to ₦1,841,200.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARTS -->
+<section id="charts">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Data Visualization</div>
+      <h2 class="section-title">Charts & Metrics</h2>
+      <p class="section-desc">Visual breakdowns of ad volume, messaging themes, and platform distribution.</p>
+    </div>
+
+    <div class="grid-2 reveal">
+      <div class="chart-wrap">
+        <h3>Active Ad Volume by Brand</h3>
+        <div class="chart-container" style="height:280px">
+          <canvas id="chartVolume"></canvas>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <h3>Ad Volume Market Share</h3>
+        <div class="chart-container" style="height:280px">
+          <canvas id="chartShare"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2 reveal" style="margin-top:20px">
+      <div class="chart-wrap">
+        <h3>Key Messaging Themes by Brand</h3>
+        <div class="chart-container" style="height:320px">
+          <canvas id="chartThemes"></canvas>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <h3>Platform Distribution</h3>
+        <div class="chart-container" style="height:320px">
+          <canvas id="chartPlatform"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-wrap reveal" style="margin-top:20px">
+      <h3>Campaign Start Timeline (Active Campaigns)</h3>
+      <div class="chart-container" style="height:220px">
+        <canvas id="chartTimeline"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section id="comparison">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Comparison</div>
+      <h2 class="section-title">Side-by-Side Comparison</h2>
+      <p class="section-desc">A structured comparison of all three brands across key strategic dimensions.</p>
+    </div>
+
+    <div class="card reveal" style="overflow-x:auto">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>Dimension</th>
+            <th style="color:var(--samsung-light)">Samsung</th>
+            <th style="color:var(--xiaomi-light)">Xiaomi / Redmi</th>
+            <th style="color:var(--tecno-light)">Tecno</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ad Volume</td>
+            <td><span class="badge badge-high">~2,200 (High)</span></td>
+            <td><span class="badge badge-medium">~520 (Medium)</span></td>
+            <td><span class="badge badge-low">~250 (Low)</span></td>
+          </tr>
+          <tr>
+            <td>Brand Presence Type</td>
+            <td>Ecosystem-driven (no official brand page ads)</td>
+            <td>Official brand page (Xiaomi Nigeria)</td>
+            <td>Hybrid (minimal official + retailer)</td>
+          </tr>
+          <tr>
+            <td>Primary Campaign Focus</td>
+            <td>Seasonal promotions + multi-product range</td>
+            <td>Single product launch (Redmi Note 15)</td>
+            <td>Full-range affordability + camera</td>
+          </tr>
+          <tr>
+            <td>Core Message</td>
+            <td>Luxury, Power, Productivity</td>
+            <td>Titan Durability, Innovation</td>
+            <td>Everyday Hustle, Smart Value</td>
+          </tr>
+          <tr>
+            <td>CTA Strategy</td>
+            <td>Shop Now (retail) + WhatsApp</td>
+            <td>Shop Now → mi.com (direct)</td>
+            <td>WhatsApp + website + Instagram</td>
+          </tr>
+          <tr>
+            <td>Pricing Transparency</td>
+            <td>Moderate (promotional pricing)</td>
+            <td>Low (no price in ads)</td>
+            <td>High (explicit price lists)</td>
+          </tr>
+          <tr>
+            <td>Financing Options</td>
+            <td>Pay Monthly (via retailers)</td>
+            <td>Not featured</td>
+            <td>BNPL (CredPal, Credit Direct)</td>
+          </tr>
+          <tr>
+            <td>Creative Format</td>
+            <td>Carousel + Video + Single Image</td>
+            <td>Carousel (feature-per-card)</td>
+            <td>Carousel + Video</td>
+          </tr>
+          <tr>
+            <td>Seasonal Campaigns</td>
+            <td>Yes (Valentine, White Friday)</td>
+            <td>No (product-focused)</td>
+            <td>Minimal</td>
+          </tr>
+          <tr>
+            <td>Target Audience Signal</td>
+            <td>All segments (budget to premium)</td>
+            <td>Tech-savvy, value-conscious youth</td>
+            <td>Everyday Nigerians, value seekers</td>
+          </tr>
+          <tr>
+            <td>WhatsApp Integration</td>
+            <td>Moderate</td>
+            <td>Low</td>
+            <td>High</td>
+          </tr>
+          <tr>
+            <td>Hashtag Usage</td>
+            <td>Minimal</td>
+            <td>Heavy (#REDMINote15Series, #TitanDurability)</td>
+            <td>Moderate (#tecnonigeria, #tecnophonesng)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- STRATEGY INSIGHTS -->
+<section id="strategy">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Strategy Insights</div>
+      <h2 class="section-title">Competitive Positioning</h2>
+      <p class="section-desc">How each brand positions itself in the Nigerian smartphone market through its content strategy.</p>
+    </div>
+
+    <div class="strategy-grid reveal">
+      <div class="strategy-card samsung">
+        <h3 style="color:var(--samsung-light)">Samsung — The Ecosystem Dominator</h3>
+        <p>Samsung achieves the highest ad volume not through a central brand voice, but through a powerful multi-tier retail ecosystem. By empowering authorized distributors (SIMS Nigeria) and retailers (SLOT) to run campaigns, Samsung effectively outsources its advertising while maintaining brand standards. This approach allows for rapid response to seasonal opportunities (Valentine's Day, White Friday) and simultaneous targeting of every market segment — from the ₦46,000 Galaxy A05 to the ₦1.8M Galaxy Z Fold 6. The trade-off is a lack of a unified brand narrative, with messaging varying significantly across advertisers.</p>
+      </div>
+      <div class="strategy-card xiaomi">
+        <h3 style="color:var(--xiaomi-light)">Xiaomi/Redmi — The Focused Challenger</h3>
+        <p>Xiaomi's strategy is the most disciplined of the three. By running a centralized campaign from the official Xiaomi Nigeria page, the brand maintains complete control over its messaging and visual identity. The feature-carousel approach — one feature per card — is a highly effective format for educating consumers about a new product. The "Titan Durability" positioning is a clear attempt to address a key concern of Nigerian consumers: phone durability in a challenging environment. The direct-to-consumer CTA (mi.com) also allows Xiaomi to capture first-party customer data and build a direct relationship with buyers.</p>
+      </div>
+      <div class="strategy-card tecno">
+        <h3 style="color:var(--tecno-light)">Tecno — The Accessibility Champion</h3>
+        <p>Tecno's most distinctive strategic asset is its commitment to financial accessibility. By prominently featuring Buy Now, Pay Later options (CredPal, Credit Direct) and transparent pricing in its ads, Tecno directly addresses the affordability barrier that prevents many Nigerians from upgrading their phones. The "everyday hustle" messaging resonates deeply with the aspirations of Nigeria's large, young, working-class population. The heavy use of WhatsApp as a CTA channel is also strategically sound, as WhatsApp is the dominant communication platform in Nigeria and reduces friction in the purchase journey.</p>
+      </div>
+    </div>
+
+    <div class="insight reveal" style="margin-top:32px">
+      <strong>Strategic Gap Identified:</strong> None of the three brands are running significant influencer-based or user-generated content (UGC) campaigns in their Meta ads. Given Nigeria's vibrant creator economy and the high trust Nigerians place in peer recommendations, this represents a significant untapped opportunity for all three brands to differentiate their content strategy.
+    </div>
+
+    <div class="grid-3 reveal" style="margin-top:32px">
+      <div class="card">
+        <div class="card-title">Xiaomi's Strength</div>
+        <p style="font-size:.875rem;color:var(--muted);margin-top:8px">Brand control and direct e-commerce conversion through a centralized campaign model. Feature-specific messaging allows algorithmic optimization.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Samsung's Strength</div>
+        <p style="font-size:.875rem;color:var(--muted);margin-top:8px">Unmatched ad volume and market coverage through a retail ecosystem. Seasonal campaigns create urgency and drive high-volume sales events.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">Tecno's Strength</div>
+        <p style="font-size:.875rem;color:var(--muted);margin-top:8px">Financial accessibility messaging (BNPL) and WhatsApp-first CTA strategy are uniquely aligned with Nigerian consumer behavior and purchasing patterns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Conclusion</div>
+      <h2 class="section-title">Key Takeaways</h2>
+      <p class="section-desc">Summary findings and strategic recommendations for competing in Nigeria's mobile advertising landscape.</p>
+    </div>
+
+    <div class="card reveal">
+      <p style="font-size:.95rem;line-height:1.8;color:var(--muted)">
+        The Nigerian mobile advertising landscape on Meta platforms is dominated by Samsung in terms of raw ad volume, but the brand operates entirely through a retailer ecosystem rather than a direct brand voice. Xiaomi/Redmi demonstrates that a focused, centralized campaign with a strong product narrative can generate significant awareness even with a fraction of Samsung's ad volume. Tecno's strategy of financial accessibility and WhatsApp-first engagement is uniquely tailored to Nigerian consumer behavior.
+      </p>
+      <p style="font-size:.95rem;line-height:1.8;color:var(--muted);margin-top:16px">
+        For brands looking to compete in this market, the data suggests three distinct strategic paths: (1) <strong style="color:var(--samsung-light)">Volume & Ecosystem</strong> — Samsung's model of empowering a large retail network to generate high ad volume and cover all market segments; (2) <strong style="color:var(--xiaomi-light)">Focus & Control</strong> — Xiaomi's model of a tight, feature-driven product launch campaign with direct e-commerce conversion; and (3) <strong style="color:var(--tecno-light)">Accessibility & Engagement</strong> — Tecno's model of transparent pricing, BNPL financing, and WhatsApp-first engagement to lower purchase barriers.
+      </p>
+      <p style="font-size:.95rem;line-height:1.8;color:var(--muted);margin-top:16px">
+        The most significant white space across all three brands is the absence of creator-led and user-generated content in their Meta advertising strategies. Given Nigeria's highly engaged social media user base and the proven effectiveness of influencer marketing in the country, integrating authentic creator content into paid media campaigns represents the most compelling opportunity for differentiation in 2026.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Competitive Content Strategy Report · Nigeria Mobile Advertising · Meta Ads Library · February 27, 2026</p>
+  <p style="margin-top:6px">Data sourced from Meta Ads Library (facebook.com/ads/library) · Analysis by Manus AI</p>
+</footer>
+
+<script>
+  // ===== SCROLL REVEAL =====
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // ===== NAV ACTIVE =====
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('onclick')?.includes(current));
+    });
+  });
+
+  // ===== BRAND TABS =====
+  function showBrand(brand) {
+    document.querySelectorAll('.brand-panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById('panel-' + brand).classList.add('visible');
+    document.querySelectorAll('.brand-tab').forEach(t => {
+      t.className = 'brand-tab';
+      if (t.getAttribute('onclick').includes(brand)) t.classList.add('active-' + brand);
+    });
+  }
+
+  // ===== CHART DEFAULTS =====
+  Chart.defaults.color = '#8b90b0';
+  Chart.defaults.borderColor = '#2e3350';
+  Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+
+  // ===== CHART 1: BAR - AD VOLUME =====
+  new Chart(document.getElementById('chartVolume'), {
+    type: 'bar',
+    data: {
+      labels: ['Samsung', 'Xiaomi / Redmi', 'Tecno'],
+      datasets: [{
+        label: 'Active Ads',
+        data: [2200, 520, 250],
+        backgroundColor: ['rgba(74,144,226,.7)', 'rgba(255,154,60,.7)', 'rgba(105,240,174,.7)'],
+        borderColor: ['#4a90e2', '#ff9a3c', '#69f0ae'],
+        borderWidth: 2,
+        borderRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#2e3350' }, ticks: { color: '#8b90b0' } },
+        x: { grid: { display: false }, ticks: { color: '#8b90b0' } }
+      }
+    }
+  });
+
+  // ===== CHART 2: DOUGHNUT - MARKET SHARE =====
+  new Chart(document.getElementById('chartShare'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Samsung', 'Xiaomi / Redmi', 'Tecno'],
+      datasets: [{
+        data: [2200, 520, 250],
+        backgroundColor: ['rgba(74,144,226,.8)', 'rgba(255,154,60,.8)', 'rgba(105,240,174,.8)'],
+        borderColor: ['#4a90e2', '#ff9a3c', '#69f0ae'],
+        borderWidth: 2,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } }
+      },
+      cutout: '60%'
+    }
+  });
+
+  // ===== CHART 3: RADAR - MESSAGING THEMES =====
+  new Chart(document.getElementById('chartThemes'), {
+    type: 'radar',
+    data: {
+      labels: ['Durability', 'Camera Quality', 'Price/Value', 'Financing/BNPL', 'Premium/Luxury', 'Gaming', 'Seasonal Deals'],
+      datasets: [
+        {
+          label: 'Samsung',
+          data: [5, 6, 7, 6, 9, 3, 9],
+          borderColor: '#4a90e2', backgroundColor: 'rgba(74,144,226,.15)', borderWidth: 2, pointRadius: 4
+        },
+        {
+          label: 'Xiaomi / Redmi',
+          data: [10, 8, 7, 2, 5, 8, 2],
+          borderColor: '#ff9a3c', backgroundColor: 'rgba(255,154,60,.15)', borderWidth: 2, pointRadius: 4
+        },
+        {
+          label: 'Tecno',
+          data: [5, 9, 9, 10, 4, 4, 3],
+          borderColor: '#69f0ae', backgroundColor: 'rgba(105,240,174,.15)', borderWidth: 2, pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } },
+      scales: {
+        r: {
+          beginAtZero: true, max: 10,
+          grid: { color: '#2e3350' },
+          angleLines: { color: '#2e3350' },
+          ticks: { display: false },
+          pointLabels: { color: '#8b90b0', font: { size: 11 } }
+        }
+      }
+    }
+  });
+
+  // ===== CHART 4: HORIZONTAL BAR - PLATFORM =====
+  new Chart(document.getElementById('chartPlatform'), {
+    type: 'bar',
+    data: {
+      labels: ['Facebook', 'Instagram', 'WhatsApp', 'Messenger', 'Threads'],
+      datasets: [
+        { label: 'Samsung',       data: [9, 8, 6, 4, 2], backgroundColor: 'rgba(74,144,226,.7)',  borderColor: '#4a90e2', borderWidth: 1, borderRadius: 4 },
+        { label: 'Xiaomi/Redmi',  data: [9, 8, 3, 2, 1], backgroundColor: 'rgba(255,154,60,.7)',  borderColor: '#ff9a3c', borderWidth: 1, borderRadius: 4 },
+        { label: 'Tecno',         data: [8, 7, 9, 6, 2], backgroundColor: 'rgba(105,240,174,.7)', borderColor: '#69f0ae', borderWidth: 1, borderRadius: 4 }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true } } },
+      scales: {
+        x: { beginAtZero: true, max: 10, grid: { color: '#2e3350' }, ticks: { display: false } },
+        y: { grid: { display: false }, ticks: { color: '#8b90b0' } }
+      }
+    }
+  });
+
+  // ===== CHART 5: LINE - TIMELINE =====
+  new Chart(document.getElementById('chartTimeline'), {
+    type: 'line',
+    data: {
+      labels: ['Jan 2026', 'Feb 1', 'Feb 8', 'Feb 11', 'Feb 17', 'Feb 20', 'Feb 23', 'Feb 27'],
+      datasets: [
+        {
+          label: 'Samsung (Retailer Ads)',
+          data: [40, 55, 65, 80, 85, 90, 95, 100],
+          borderColor: '#4a90e2', backgroundColor: 'rgba(74,144,226,.1)',
+          tension: 0.4, fill: true, pointRadius: 4
+        },
+        {
+          label: 'Xiaomi / Redmi',
+          data: [20, 30, 35, 45, 80, 85, 88, 90],
+          borderColor: '#ff9a3c', backgroundColor: 'rgba(255,154,60,.1)',
+          tension: 0.4, fill: true, pointRadius: 4
+        },
+        {
+          label: 'Tecno',
+          data: [30, 35, 38, 42, 45, 48, 50, 52],
+          borderColor: '#69f0ae', backgroundColor: 'rgba(105,240,174,.1)',
+          tension: 0.4, fill: true, pointRadius: 4
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#2e3350' }, ticks: { color: '#8b90b0', callback: v => v + '%' } },
+        x: { grid: { display: false }, ticks: { color: '#8b90b0' } }
+      }
+    }
+  });
+</script>
+</body>
+</html>
